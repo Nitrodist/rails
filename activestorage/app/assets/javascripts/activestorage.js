@@ -564,10 +564,21 @@
       if (csrfToken != undefined) {
         this.xhr.setRequestHeader("X-CSRF-Token", csrfToken);
       }
+      console.log("Creating a blob record");
       this.xhr.addEventListener("load", function(event) {
         return _this.requestDidLoad(event);
       });
       this.xhr.addEventListener("error", function(event) {
+        console.log("Blob uplaod is erroring");
+        return _this.requestDidError(event);
+      });
+
+      this.xhr.addEventListener("timeout", function(event) {
+        console.log("Blob upload timing out")
+        return _this.requestDidError(event);
+      });
+      this.xhr.addEventListener("abort", function(event) {
+        console.log("Blob upload is aborting")
         return _this.requestDidError(event);
       });
     }
